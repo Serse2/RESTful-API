@@ -1,0 +1,4 @@
+# Source to ignore#
+###################
+.env
+node_modules
