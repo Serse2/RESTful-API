@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3030;
 const routerList = require("./routes/listItem");
+const routerAuth = require("./routes/auth");
 require("dotenv/config");
 
 // connect to mongo db Atlas
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 
 // far consumare le rotte al server
 app.use("/api", routerList);
+app.use("/api", routerAuth);
 
 app.get("/", (req, res) => {
   res.send("welcome to my app");
