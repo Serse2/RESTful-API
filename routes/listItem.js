@@ -2,9 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const Item = require("../models/ItemModel");
+const verify = require("../Utils/verifyToken");
 
 // get the list of item
-router.get("/items", async (req, res) => {
+router.get("/items", verify, async (req, res) => {
   try {
     const result = await Item.find();
     res.json(result);

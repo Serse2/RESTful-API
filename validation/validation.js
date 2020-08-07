@@ -1,3 +1,4 @@
+// validation data
 const Joi = require("@hapi/joi");
 
 const validationRegistration = (data) => {
@@ -19,3 +20,4 @@ const validationLogIn = (data) => {
 };
 
 module.exports.validationRegistration = validationRegistration;
+module.exports.validationLogIn = validationLogIn;
