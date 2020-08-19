@@ -1,4 +1,4 @@
-// create a middelware to verify the token from the user
+// create a middleware to verify the token from the user
 var jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {

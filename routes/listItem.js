@@ -1,35 +1,38 @@
 // schema dei dati
 const express = require("express");
 const router = express.Router();
-const Item = require("../models/ItemModel");
+const List = require("../models/listModel");
 const verify = require("../Utils/verifyToken");
 
 // get the list of item
-router.get("/items", verify, async (req, res) => {
+router.get("/lists", verify, async (req, res) => {
   try {
-    const result = await Item.find();
+    const result = await List.find();
     res.json(result);
   } catch (error) {
     console.log(error.message);
   }
 });
 
-// intert a new item
-router.post("/items", async (req, res) => {
-  const item = new Item({
-    name: req.body.name,
+// intert a new list
+router.post("/lists", async (req, res) => {
+  const list = new List({
+    title: req.body.title,
+    description: req.body.description,
+    userId: req.body.userId,
+    items: req.body.items,
   });
 
   try {
-    const insertItem = await item.save();
-    res.json(insertItem);
+    const insertList = await list.save();
+    res.json(insertList);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
 // search for a specific item name
-router.get("/items/:name", async (req, res) => {
+router.get("/lists/:title", async (req, res) => {
   try {
     const singleItem = await Item.find({ name: req.params.name });
     if (singleItem === []) {
@@ -42,7 +45,7 @@ router.get("/items/:name", async (req, res) => {
 });
 
 // Delete
-router.delete("/items/:name", async (req, res) => {
+router.delete("/lists/:title", async (req, res) => {
   try {
     const deleteItem = await Item.deleteOne({ name: req.params.name });
     res.json(deleteItem);
