@@ -5,7 +5,8 @@ const List = require("../models/listModel");
 const verify = require("../Utils/verifyToken");
 
 // get the list of item
-router.get("/lists", verify, async (req, res) => {
+// insert verify to protect the router
+router.get("/lists", async (req, res) => {
   try {
     const result = await List.find();
     res.json(result);
@@ -15,7 +16,7 @@ router.get("/lists", verify, async (req, res) => {
 });
 
 // intert a new list
-router.post("/lists", async (req, res) => {
+router.post("/crate-lists", async (req, res) => {
   const list = new List({
     title: req.body.title,
     description: req.body.description,
@@ -31,23 +32,24 @@ router.post("/lists", async (req, res) => {
   }
 });
 
-// search for a specific item name
-router.get("/lists/:title", async (req, res) => {
+// search all list from a user id
+router.get("/lists/:_id", async (req, res) => {
   try {
-    const singleItem = await Item.find({ name: req.params.name });
-    if (singleItem === []) {
-      res.json({ message: "item not found" });
+    const singleList = await List.find({ userId: req.params._id });
+    console.log(typeof singleList);
+    if (singleList.length === 0) {
+      return res.json({ message: "list not found" });
     }
-    res.json(singleItem);
+    res.json(singleList);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
 // Delete
-router.delete("/lists/:title", async (req, res) => {
+router.delete("/lists/:_id", async (req, res) => {
   try {
-    const deleteItem = await Item.deleteOne({ name: req.params.name });
+    const deleteItem = await List.deleteOne({ _id: req.params._id });
     res.json(deleteItem);
   } catch (error) {
     res.json({ message: error });
