@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 3030;
 const routerList = require("./routes/listItem");
 const routerAuth = require("./routes/auth");
+const cors = require("cors");
 require("dotenv/config");
 
 // connect to mongo db Atlas
@@ -21,6 +22,7 @@ const db = mongoose
 //middelware
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
+app.use(cors());
 
 // far consumare le rotte al server
 app.use("/api", routerList);
