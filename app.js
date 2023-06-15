@@ -6,23 +6,25 @@ const routerList = require("./routes/listItem");
 const routerAuth = require("./routes/auth");
 const cors = require("cors");
 require("dotenv/config");
+const cookieParser = require("cookie-parser");
 
 // connect to mongo db Atlas
 const mongoose = require("mongoose");
-const db = mongoose
-  .connect(process.env.URL_DB, {
-    dbName: process.env.NAME_DB,
-    user: process.env.USER_DB,
-    pass: process.env.PASSWORD_DB,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("connected"));
+// const db = mongoose
+//   .connect(process.env.URL_DB, {
+//     dbName: process.env.NAME_DB,
+//     user: process.env.USER_DB,
+//     pass: process.env.PASSWORD_DB,
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("connected"));
 
 //middelware
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser());
 
 // far consumare le rotte al server
 app.use("/api", routerList);

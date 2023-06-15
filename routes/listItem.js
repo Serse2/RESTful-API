@@ -33,7 +33,7 @@ router.post("/crate-lists", async (req, res) => {
 });
 
 // search all list from a user id
-router.get("/lists/:_id", async (req, res) => {
+router.get("/lists/:_id", verify, async (req, res) => {
   try {
     const singleList = await List.find({ userId: req.params._id });
     console.log(typeof singleList);
